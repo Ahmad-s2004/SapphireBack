@@ -20,6 +20,9 @@ app.use("/api/v1/auth",postRoute)
 app.use("/api/v2/auth",deleteRoute)
 app.use("/api/v3/auth",getRoute)
 
+app.get("/", (req, res)=>{
+    res.send("Hello")
+})
 const PORT = process.env.port || 4000;
 
 

@@ -8,7 +8,9 @@ const {showNewIn} = require('../controllers/newIn')
 const {showWomen} = require('../controllers/women')
 const router = express.Router()
 
-
+router.get("/data/get", (req, res)=>{
+  res.send("Hello this is working")
+})
 router.get("/data/men", showMen)
 router.get("/data/kids", showKids)
 router.get("/data/home", showHome)

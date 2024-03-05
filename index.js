@@ -14,7 +14,7 @@ const dbConnection = require('./database/dbconn')
 dbConnection()
 
 const app = express()
-app.options("", corsConfig)
+app.options("", cors(corsConfig))
 
 app.use(cors(corsConfig));
 app.use(express.json())

@@ -10,17 +10,17 @@ const dbConnection = require('./database/dbconn')
 dbConnection()
 
 const app = express()
-app.use('',express.static('uploads'))
+app.use('',express.static('./uploads'))
 
 app.use(cors());
 app.use(express.json())
-app.use("",express.static('uploads'))
+app.use("",express.static('./uploads'))
 
 
 app.use("/api/v1/auth",postRoute)
 app.use("/api/v2/auth",deleteRoute)
 app.use("/api/v3/auth",getRoute)
-app.use('',express.static('uploads'))
+app.use('',express.static('./uploads'))
 app.get("/", (req, res)=>{
     res.send("Hello Ahmad why is this happening")
 })

@@ -1,10 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-//const corsConfig = {
-//    origin:"*", 
-//    credential:true,
-//    methods: ["POST", "DELETE", "PUT", "GET"],
-//};
+
 const postRoute = require('./routers/postRoute.js')
 const deleteRoute = require('./routers/deleteRoute.js')
 const getRoute = require('./routers/getRoute.js')
@@ -14,11 +10,11 @@ const dbConnection = require('./database/dbconn')
 dbConnection()
 
 const app = express()
-// app.options("", cors(corsConfig))
+
 
 app.use(cors());
 app.use(express.json())
-app.use('/api/v3/auth',express.static('uploads'))
+app.use("",express.static('uploads'))
 
 
 app.use("/api/v1/auth",postRoute)

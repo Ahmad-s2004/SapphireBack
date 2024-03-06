@@ -44,7 +44,7 @@ const MenApi = async(req, res) => {
   const showMen = async (req, res) => {
     try {
         // Use the MenSchema model to find data in the MongoDB collection
-        let data = await MenSchema.find();
+        let data = await MensSchema.find();
 
         // Send the retrieved data as a response
         res.send(data);

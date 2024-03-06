@@ -18,7 +18,7 @@ app.options("", cors(corsConfig))
 
 app.use(cors(corsConfig));
 app.use(express.json())
-app.use('/api/v3/auth',express.static('uploads'))
+app.use('/api/v3/auth',express.static('/uploads'))
 
 
 app.use("/api/v1/auth",postRoute)

@@ -41,10 +41,19 @@ const MenApi = async(req, res) => {
       });
     }
   };
-  const showMen = async(req, res) => {
-    let data = await MenSchema.find()
-        res.send(data)
-  }
+  const showMen = async (req, res) => {
+    try {
+        // Use the MenSchema model to find data in the MongoDB collection
+        let data = await MenSchema.find();
+
+        // Send the retrieved data as a response
+        res.send(data);
+    } catch (error) {
+        // Handle errors and send an appropriate response
+        console.error("Error fetching data:", error);
+        res.status(500).send("Internal Server Error");
+    }
+};
   const deleteMen = async(req, res) => {
     let result = await MenSchema.findById(req.params.id)
         res.send(result)

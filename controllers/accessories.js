@@ -29,7 +29,7 @@ const AccessoriesApi = async (req, res) => {
 
 const showAccessories = async (req, res) => {
   try {
-    const accessories = await AccessoriesSchemas.find();
+    const accessories = await AccessoriesSchema.find();
     if(accessories){
       return res.status(200).json(accessories);
     }else{

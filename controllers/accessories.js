@@ -1,59 +1,63 @@
 const AccessoriesSchema = require("../models/accessoriesModel");
 
-
-const AccessoriesApi = async(req, res) => {
+const AccessoriesApi = async (req, res) => {
+  try {
     const { title, price, detail, description, color, size, fabric } = req.body;
     const file = req.file.filename;
+
     if (!title || !price || !detail || !description || !color || !size || !fabric || !file) {
-      return res.send({ message: "Please fill required fields" });
+      return res.status(400).json({ message: "Please fill all required fields" });
     }
-  
-    try {
-      // let existinguser = User.find({ email: email });
-      // if (existinguser) {
-      //   res.send({ message: "You are already registered" });
-      // }
-  
-      // let hashedPassword = await hashPassword(password);
-  
-      let data = await new AccessoriesSchema({
-        title,
-        price, 
-        detail, 
-        description, 
-        color, 
-        size, 
-        fabric,
-        img: file,
-      }).save();
-      res.send(data);
-      
-      // res.status(200).send({
-      //   success: true,
-      //   message: "You registered successfully",
-        
-      // });
-    } catch (error) {
-      res.status(500).send({
-        success: false,
-        message: "Failed to register",
-        error,
-      });
+    const newAccessory = new AccessoriesSchema({
+      title,
+      price,
+      detail,
+      description,
+      color,
+      size,
+      fabric,
+      img: file,
+    });
+
+    const savedData = await newAccessory.save();
+    res.status(201).json(savedData);
+  } catch (error) {
+    console.error("Error adding accessory:", error);
+    res.status(500).json({ success: false, message: "Failed to add accessory data", error: error.message });
+  }
+};
+
+const showAccessories = async (req, res) => {
+  try {
+    const accessories = await AccessoriesSchemas.find();
+    if(accessories){
+      return res.status(200).json(accessories);
+    }else{
+      return res.status(404).json({message:"No data found"})
     }
-  };
-
-
-  const showAccessories = async(req, res) => {
-    let data = await AccessoriesSchema.find()
-        res.send(data)
+  } catch (error) {
+    console.error("Error fetching accessories:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch accessories", error: error.message });
   }
+};
 
-  const deleteAccessories = async(req, res) => {
-    let result = await AccessoriesSchema.findById(req.params.id)
-        res.send(result)
+const deleteAccessories = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedAccessory = await AccessoriesSchema.findByIdAndDelete(id);
+    
+    if (!deletedAccessory) {
+      return res.status(404).json({ success: false, message: "Accessory not found" });
+    }
+    return res.status(200).json({ success: true, message: "Accessory deleted successfully", deletedAccessory });
+  } catch (error) {
+    console.error("Error deleting accessory:", error);
+    res.status(500).json({ success: false, message: "Failed to delete accessory", error: error.message });
   }
+};
 
-  
-exports.showAccessories = showAccessories;
-exports.AccessoriesApi = AccessoriesApi;
-exports.deleteAccessories = deleteAccessories;
+module.exports = {
+  AccessoriesApi,
+  showAccessories,
+  deleteAccessories,
+};
